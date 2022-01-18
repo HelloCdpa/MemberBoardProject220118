@@ -1,4 +1,7 @@
 package com.icia.mboard.service;
 
-public class CommentServiceImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class CommentServiceImpl implements CommentService{
 }

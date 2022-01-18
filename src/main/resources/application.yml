@@ -1,5 +1,5 @@
 server:
-  port: 8091
+  port: 8094
 #DB접속 정보
 spring:
   datasource:
@@ -9,15 +9,15 @@ spring:
     password: 1234
 
 #JPA관련 설정 datasource와 같은 선에서
-jpa:
-  database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-  show-sql: true
-  hibernate:
-    ddl-auto: create
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create
 
 #mybatis 관련설정
-mybatis:
-  #resources/mapper/ 에 있는 모든 xml 파일을 내가 매퍼로 쓸거다.
-  mapper-locations: mapper/*.xml
+#mybatis:
+#  #resources/mapper/ 에 있는 모든 xml 파일을 내가 매퍼로 쓸거다.
+#  mapper-locations: mapper/*.xml
   #alias설정
 #  type-aliases-package: com.icia.member.dto
