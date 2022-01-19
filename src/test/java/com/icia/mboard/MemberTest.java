@@ -35,7 +35,7 @@ public class MemberTest {
 
     @Test
     @DisplayName("테스트 회원 30명 등록")
-    public void testMemberSave()throws IllegalStateException, IOException  {
+    public void testMemberSave(){
 
         IntStream.rangeClosed(1, 30).forEach(i->{
 

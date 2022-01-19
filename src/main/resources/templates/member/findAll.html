@@ -3,9 +3,42 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>findAll</title>
 </head>
 <body>
+<table>
+    <thead>
+        <th></th>
+    </thead>
+    <tbody>
+    <tr>
+    <tr th:each="member:${memberList}">
+        <td th:text="${member.memberId}">번호</td>
+        <td th:text="${member.memberEmail}">이메일</td>
+        <td th:text="${member.memberPassword}">비밀번호</td>
+        <td th:text="${member.memberName}">이름</td>
+        <td th:text="${member.memberPhone}">전화번호</td>
+        <td th:text="${member.memberName}">프로필사진 </td>
+        <td><a th:href="@{|/member/${member.memberId}|}">조회</a></td>
+        <td><button th:onclick="detail([[${member.memberId}]])">조회(ajax)</button></td>
+        <td><button th:onclick="deleteById([[${member.memberId}]]">삭제(delete)</button></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+
+
+    </tr>
+    </tbody>
+
+
+
+
+</table>
+
+
+
+
 
 </body>
 </html>

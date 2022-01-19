@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -63,5 +64,21 @@ public class MemberServiceImpl implements MemberService{
             memberList.add(MemberDetailDTO.toMemberDetailDTO(e));
         }
         return memberList;
+    }
+
+    @Override
+    public MemberDetailDTO findById(Long memberId) {
+        Optional<MemberEntity> memberEntityOptional = mr.findById(memberId);
+        MemberEntity memberEntity = memberEntityOptional.get();
+        MemberDetailDTO memberDetailDTO = MemberDetailDTO.toMemberDetailDTO(memberEntity);
+
+        return memberDetailDTO;
+    }
+
+    @Override
+    public Long findByMemberId(String memberEmail) {
+        MemberEntity memberEntity = mr.findByMemberEmail(memberEmail);
+        Long memberId = memberEntity.getId();
+        return memberId;
     }
 }

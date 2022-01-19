@@ -13,5 +13,9 @@ public interface MemberService {
     boolean findByEmail(MemberLoginDTO memberLoginDTO);
 
     List<MemberDetailDTO> findAll();
+
+    MemberDetailDTO findById(Long memberId);
+
+    Long findByMemberId(String memberEmail);
 }
 

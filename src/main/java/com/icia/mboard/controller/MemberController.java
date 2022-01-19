@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -32,9 +29,11 @@ public class MemberController {
     //회원가입
     @PostMapping("/save")
     public String save(@Validated @ModelAttribute("member") MemberSaveDTO memberSaveDTO, BindingResult bindingResult) throws IllegalStateException, IOException {
+      //유효성을 검증하는 조건문
        if(bindingResult.hasErrors()) {
            return "/member/save";
        }
+       // 이메일 중복체크 오류를 던져주는 트라이캐치문
            try {
                ms.save(memberSaveDTO);
 
@@ -65,18 +64,29 @@ public class MemberController {
 
         if(ms.findByEmail(memberLoginDTO)){
             session.setAttribute("loginEmail",memberLoginDTO.getMemberEmail());
-            return "redirect:/board/";
+            Long loginId = ms.findByMemberId(memberLoginDTO.getMemberEmail());
+            session.setAttribute("loginId",loginId);
+            System.out.println(loginId);
+            return "index";
         }else{
             return "/member/login";
         }
 
     }
-
+    //전체조회
     @GetMapping("/")
     public String findAll(Model model){
         List<MemberDetailDTO> memberList = ms.findAll();
-
+        model.addAttribute("memberList",memberList);
         return "/member/findAll";
+    }
+
+    @GetMapping("{memberId}")
+    public String findById(@PathVariable ("memberId") Long memberId,Model model){
+
+       MemberDetailDTO memberDetailDTO = ms.findById(memberId);
+       model.addAttribute("member",memberDetailDTO);
+       return "/member/findById";
     }
 
 

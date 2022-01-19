@@ -10,6 +10,15 @@
         }
 
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        function emailCheck(){
+        const memberEmail = document.getElementById("memberEmail")
+
+
+
+        }
+    </script>
 
 </head>
 <body>
@@ -19,7 +28,7 @@
     <div th:if="${#fields.hasGlobalErrors()}">
         <p class="field-error" th:each="err: ${#fields.globalErrors()}" th:text="${err}">글로벌오류</p>
     </div>
-    이메일 : <input th:class="form-control" type="text" th:field="*{memberEmail}" placeholder="이메일">
+    이메일 : <input th:class="form-control" type="text" th:field="*{memberEmail}" placeholder="이메일" th:onblur="emailCheck()">
 
     <p th:if="${#fields.hasErrors('memberEmail')}" th:errors="*{memberEmail}" th:errorclass="field-error"></p>
     비밀번호 : <input th:class="form-control" type="password" th:field="*{memberPassword}" placeholder="비밀번호">
