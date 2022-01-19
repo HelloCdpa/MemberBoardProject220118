@@ -1,5 +1,5 @@
 server:
-  port: 8094
+  port: 8093
 #DB접속 정보
 spring:
   datasource:
@@ -13,7 +13,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
 #mybatis 관련설정
 #mybatis:

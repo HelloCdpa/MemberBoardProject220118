@@ -1,6 +1,7 @@
 package com.icia.mboard.entity;
 
 import com.icia.mboard.dto.MemberDetailDTO;
+import com.icia.mboard.dto.MemberSaveDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -21,8 +22,6 @@ public class MemberEntity {
     private Long id;
 
     @Column
-    @UniqueElements
-    @Length(min = 6, max = 30)
     private String memberEmail;
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -32,7 +31,6 @@ public class MemberEntity {
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     @Column
-    @Length(min = 8, max = 50)
     private String memberPassword;
 
     @Column
@@ -44,7 +42,20 @@ public class MemberEntity {
     @Column
     private String memberProfileName;
 
-    public static MemberEntity toMemberEntity(MemberDetailDTO memberDetailDTO){
+    public static MemberEntity toMemberEntitySave(MemberSaveDTO memberSaveDTO){
+        MemberEntity memberEntity = new MemberEntity();
+
+        memberEntity.setMemberEmail(memberSaveDTO.getMemberEmail());
+        memberEntity.setMemberPhone(memberSaveDTO.getMemberPhone());
+        memberEntity.setMemberName(memberSaveDTO.getMemberName());
+        memberEntity.setMemberPassword(memberSaveDTO.getMemberPassword());
+        memberEntity.setMemberProfileName(memberSaveDTO.getMemberProfileName());
+
+        return memberEntity;
+    }
+
+
+    public static MemberEntity toMemberEntityDetail(MemberDetailDTO memberDetailDTO){
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setMemberEmail(memberDetailDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDetailDTO.getMemberPassword());
