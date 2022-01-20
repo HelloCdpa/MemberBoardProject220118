@@ -2,6 +2,7 @@ package com.icia.mboard.entity;
 
 import com.icia.mboard.dto.MemberDetailDTO;
 import com.icia.mboard.dto.MemberSaveDTO;
+import com.icia.mboard.dto.MemberUpdateDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -55,13 +56,14 @@ public class MemberEntity {
     }
 
 
-    public static MemberEntity toMemberEntityDetail(MemberDetailDTO memberDetailDTO){
+    public static MemberEntity toMemberUpdateEntity(MemberUpdateDTO memberUpdateDTO){
         MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setMemberEmail(memberDetailDTO.getMemberEmail());
-        memberEntity.setMemberPassword(memberDetailDTO.getMemberPassword());
-        memberEntity.setMemberName(memberDetailDTO.getMemberName());
-        memberEntity.setMemberPhone(memberDetailDTO.getMemberPhone());
-        memberEntity.setMemberProfileName(memberDetailDTO.getMemberProfileName());
+        memberEntity.setId(memberUpdateDTO.getMemberId());
+        memberEntity.setMemberName(memberUpdateDTO.getMemberName());
+        memberEntity.setMemberEmail(memberUpdateDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberUpdateDTO.getMemberPassword());
+        memberEntity.setMemberPhone(memberUpdateDTO.getMemberPhone());
+        memberEntity.setMemberProfileName(memberUpdateDTO.getMemberProfileName());
 
         return memberEntity;
     }

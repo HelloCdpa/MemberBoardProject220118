@@ -3,6 +3,7 @@ package com.icia.mboard.service;
 import com.icia.mboard.dto.MemberDetailDTO;
 import com.icia.mboard.dto.MemberLoginDTO;
 import com.icia.mboard.dto.MemberSaveDTO;
+import com.icia.mboard.dto.MemberUpdateDTO;
 import com.icia.mboard.entity.MemberEntity;
 import com.icia.mboard.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -80,5 +81,40 @@ public class MemberServiceImpl implements MemberService{
         MemberEntity memberEntity = mr.findByMemberEmail(memberEmail);
         Long memberId = memberEntity.getId();
         return memberId;
+    }
+
+    @Override
+    public String emailDuplication(String memberEmail) {
+        MemberEntity memberEntity = mr.findByMemberEmail(memberEmail);
+        if (memberEntity == null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }
+
+    @Override
+    public void deleteById(Long memberId) {
+        mr.deleteById(memberId);
+    }
+
+    @Override
+    public void update(MemberUpdateDTO memberUpdateDTO) throws IllegalStateException, IOException {
+        // 프로필 사진 저장하기 파일 -> 이름
+        MultipartFile m_file = memberUpdateDTO.getMemberProfile();
+        String m_filename = m_file.getOriginalFilename();
+        m_filename = System.currentTimeMillis() + "-" + m_filename;
+        // 파일 저장하기
+        String savePath = "D:\\development_Phl\\source\\springboot\\MemberBoardProject\\src\\main\\resources\\member_uploadfile\\"+m_filename;
+        if(!m_file.isEmpty()) {
+            m_file.transferTo(new File(savePath));
+        }
+        memberUpdateDTO.setMemberProfileName(m_filename);
+
+        MemberEntity memberEntity = MemberEntity.toMemberUpdateEntity(memberUpdateDTO);
+        mr.save(memberEntity);
+
+
+
     }
 }

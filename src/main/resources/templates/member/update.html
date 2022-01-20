@@ -6,11 +6,72 @@
     <title>update</title>
 </head>
 <body>
-<form action=""></form>
-
-
-
-
-
+<form th:object="${member}" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{memberId}">
+    <input type="text" th:field="*{memberName}" placeholder="이름" readonly>
+    <input type="text" th:field="*{memberEmail}" placeholder="이메일" readonly>
+    <input type="password" th:field="*{memberPassword}" placeholder="비밀번호입력">
+    <input type="text" th:field="*{memberPhone}" placeholder="변경할 전화번호" readonly>
+    <label for="memberProfile">프로필 사진 선택</label>
+    <input th:class="form-control" type="file" id="memberProfile" name="memberProfile">
+    <input type="button" value="수정(put)" th:onclick="memberUpdate()">
+</form>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+    const memberUpdate = () => {
+        const memberId = document.getElementById('memberId').value;
+        const memberName = document.querySelector('#memberName').value;
+        const memberEmail = $('#memberEmail').val();
+        const memberPassword = $('#memberPassword').val();
+        const memberPhone = $('#memberPhone').val();
+        const memberProfile = document.getElementById('memberProfile').value;
+        console.log(memberId,memberName,memberEmail,memberPassword,memberPhone,memberProfile);
+        const reqUrl = "/member/" +memberId;
+
+        const updateData = JSON.stringify({
+            memberId : memberId,
+            memberName : memberName,
+            memberEmail : memberEmail,
+            memberPassword : memberPassword,
+            memberPhone : memberPhone,
+            }
+        );
+        const formData = new FormData();
+        for (let i = 0; i < memberProfile.length; i++) {
+            formData.append('memberProfile', memberProfile[i]);
+        }
+        formData.append('updateData', updateData);
+        formData.append('memberProfile', memberProfile);
+
+        console.log(updateData);
+        // https://velog.io/@xedni/JavaScript-%ED%8C%8C%EC%9D%BC-%EC%97%85%EB%A1%9C%EB%93%9C-FormData
+        const pwDB = "[[${member.memberPassword}]]";
+        if(pwDB == memberPassword){
+            $.ajax({
+                type : 'put',
+                enctype: 'multipart/form-data',
+                cache: false,
+                contentType : 'multipart/form-data',
+                processData : false,
+                data : formData,
+                url : reqUrl,
+                success : function (){
+                    location.href = "/member/"+memberId;
+                },error : function (){
+                    alert("요청실패")
+                }
+            })}
+        else {
+            alert('비밀번호가 틀렸습니다.');
+        }
+    };
+
+</script>
+
+
+
+
+
 </html>

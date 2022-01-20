@@ -23,11 +23,12 @@ public class MemberDetailDTO {
 
     public static MemberDetailDTO toMemberDetailDTO(MemberEntity memberEntity){
         MemberDetailDTO memberDetailDTO = new MemberDetailDTO();
-        memberEntity.setMemberName(memberEntity.getMemberName());
-        memberEntity.setMemberPhone(memberEntity.getMemberPhone());
-        memberEntity.setMemberEmail(memberEntity.getMemberEmail());
-        memberEntity.setMemberPassword(memberEntity.getMemberPassword());
-        memberEntity.setMemberProfileName(memberDetailDTO.getMemberProfileName());
+        memberDetailDTO.setMemberId(memberEntity.getId());
+        memberDetailDTO.setMemberName(memberEntity.getMemberName());
+        memberDetailDTO.setMemberPhone(memberEntity.getMemberPhone());
+        memberDetailDTO.setMemberEmail(memberEntity.getMemberEmail());
+        memberDetailDTO.setMemberPassword(memberEntity.getMemberPassword());
+        memberDetailDTO.setMemberProfileName(memberEntity.getMemberProfileName());
 
         return memberDetailDTO;
 

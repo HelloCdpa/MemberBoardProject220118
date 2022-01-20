@@ -33,5 +33,11 @@ public class MemberSaveDTO {
     private String memberProfileName;
     private MultipartFile memberProfile;
 
-
+    public MemberSaveDTO(String memberEmail, String memberPassword, String memberName, String memberPhone, String memberProfileName) {
+        this.memberEmail = memberEmail;
+        this.memberPassword = memberPassword;
+        this.memberName = memberName;
+        this.memberPhone = memberPhone;
+        this.memberProfileName = memberProfileName;
+    }
 }
