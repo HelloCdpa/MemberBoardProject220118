@@ -123,7 +123,7 @@ public class MemberController {
     }
 
     @PutMapping("/{memberId}")
-    public ResponseEntity update(@RequestBody MemberUpdateDTO memberUpdateDTO)
+    public ResponseEntity update(@ModelAttribute MemberUpdateDTO memberUpdateDTO)
             throws IllegalStateException, IOException {
         System.out.println("받아온 것"+ memberUpdateDTO);
        ms.update(memberUpdateDTO);

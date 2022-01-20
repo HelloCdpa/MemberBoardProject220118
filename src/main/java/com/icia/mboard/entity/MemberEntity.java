@@ -1,12 +1,9 @@
 package com.icia.mboard.entity;
 
-import com.icia.mboard.dto.MemberDetailDTO;
 import com.icia.mboard.dto.MemberSaveDTO;
 import com.icia.mboard.dto.MemberUpdateDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "member_table")
-public class MemberEntity {
+public class MemberEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
