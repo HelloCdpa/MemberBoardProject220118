@@ -21,7 +21,7 @@ public class BoardEntity extends BaseEntity{
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_table")
+    @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
     @OneToMany(mappedBy = "boardEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -46,7 +46,8 @@ public class BoardEntity extends BaseEntity{
 
     public static BoardEntity toBoardEntitySave(BoardSaveDTO boardSaveDTO, MemberEntity memberEntity){
         BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setBoardWriter(memberEntity.getMemberEmail());
+        boardEntity.setMemberEntity(memberEntity);
+        boardEntity.setBoardWriter(boardSaveDTO.getBoardWriter());
         boardEntity.setBoardPassword(boardSaveDTO.getBoardPassword());
         boardEntity.setBoardTitle(boardSaveDTO.getBoardTitle());
         boardEntity.setBoardContents(boardSaveDTO.getBoardContents());

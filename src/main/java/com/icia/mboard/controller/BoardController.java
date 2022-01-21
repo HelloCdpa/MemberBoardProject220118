@@ -1,17 +1,20 @@
 package com.icia.mboard.controller;
 
+import com.icia.mboard.common.PagingConst;
+import com.icia.mboard.dto.BoardDetailDTO;
+import com.icia.mboard.dto.BoardPagingDTO;
 import com.icia.mboard.dto.BoardSaveDTO;
 import com.icia.mboard.dto.MemberSaveDTO;
 import com.icia.mboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -29,10 +32,41 @@ public class BoardController {
 
     @PostMapping("/save")
     public String save(@Validated @ModelAttribute BoardSaveDTO boardSaveDTO, BindingResult bindingResult)throws IllegalStateException, IOException {
-         Long boardId = bs.save(boardSaveDTO);
+        System.out.println("받아온 값"+boardSaveDTO);
+        if (bindingResult.hasErrors()) {
+            return "/board/save";
+        }
+        Long boardId = bs.save(boardSaveDTO);
 
         return "redirect:/board/";
     }
+
+    @GetMapping("{boardId}")
+    public String findById(@PathVariable ("boardId") Long boardId, Model model){
+        BoardDetailDTO boardDetailDTO = bs.findById(boardId);
+        return "/board/findById";
+    }
+
+    @GetMapping
+    public String paging(@PageableDefault(page = 1)Pageable pageable,Model model){
+        Page<BoardPagingDTO> boardList = bs.paging(pageable);
+        model.addAttribute("boardList",boardList);
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+        int endPage = ((startPage + PagingConst.BLOCK_LIMIT-1)< boardList.getTotalPages())?startPage + PagingConst.BLOCK_LIMIT -1 : boardList.getTotalPages();
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
+        return "/board/findAll";
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 
