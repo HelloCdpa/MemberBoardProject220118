@@ -1,5 +1,6 @@
 package com.icia.mboard.dto;
 
+import com.icia.mboard.entity.CommentEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,23 @@ public class CommentDetailDTO {
 
     private LocalDateTime commentCreateDate;
     private LocalDateTime commentUpdateDate;
+
+    public static CommentDetailDTO toCommentDetail(CommentEntity commentEntity){
+        CommentDetailDTO commentDetailDTO = new CommentDetailDTO();
+        commentDetailDTO.setCommentWriter(commentEntity.getCommentWriter());
+        commentDetailDTO.setCommentContents(commentEntity.getCommentContents());
+        commentDetailDTO.setCommentCreateDate(commentEntity.getCreatTime());
+        commentDetailDTO.setCommentUpdateDate(commentEntity.getUpdateTime());
+
+        commentDetailDTO.setCommentId(commentEntity.getId());
+        commentDetailDTO.setBoardId(commentEntity.getMemberEntity().getId());
+        commentDetailDTO.setBoardId(commentEntity.getBoardEntity().getId());
+
+        return commentDetailDTO;
+    }
+
+
+
+
 
 }

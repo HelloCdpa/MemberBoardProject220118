@@ -44,6 +44,7 @@ public class BoardController {
     @GetMapping("{boardId}")
     public String findById(@PathVariable ("boardId") Long boardId, Model model){
         BoardDetailDTO boardDetailDTO = bs.findById(boardId);
+        model.addAttribute("board",boardDetailDTO);
         return "/board/findById";
     }
 

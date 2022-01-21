@@ -1,6 +1,7 @@
 package com.icia.mboard.entity;
 
 import com.icia.mboard.dto.CommentDetailDTO;
+import com.icia.mboard.dto.CommentSaveDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,11 +18,11 @@ public class CommentEntity extends BaseEntity{
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_table")
+    @JoinColumn(name = "board_id")
     private BoardEntity boardEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_table")
+    @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
     @Column
@@ -30,12 +31,12 @@ public class CommentEntity extends BaseEntity{
     @Column
     private String commentContents;
 
-    public static CommentEntity toCommentEntity(CommentDetailDTO commentDetailDTO, BoardEntity boardEntity, MemberEntity memberEntity){
+    public static CommentEntity toCommentEntity(CommentSaveDTO commentSaveDTO, BoardEntity boardEntity, MemberEntity memberEntity){
         CommentEntity commentEntity = new CommentEntity();
         commentEntity.setBoardEntity(boardEntity);
         commentEntity.setMemberEntity(memberEntity);
         commentEntity.setCommentWriter(memberEntity.getMemberEmail());
-        commentEntity.setCommentContents(commentDetailDTO.getCommentContents());
+        commentEntity.setCommentContents(commentSaveDTO.getCommentContents());
         return commentEntity;
     }
 
