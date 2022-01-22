@@ -79,7 +79,7 @@ public class MemberController {
             Long loginId = ms.findByMemberId(memberLoginDTO.getMemberEmail());
             session.setAttribute("loginId", loginId);
             System.out.println(loginId);
-            return "index";
+            return "redirect:/board/";
         } else {
             return "/member/login";
         }
