@@ -28,7 +28,6 @@ public class CommentDetailDTO {
 
         commentDetailDTO.setCommentId(commentEntity.getId());
         commentDetailDTO.setBoardId(commentEntity.getMemberEntity().getId());
-        commentDetailDTO.setBoardId(commentEntity.getBoardEntity().getId());
 
         return commentDetailDTO;
     }

@@ -4,7 +4,7 @@ import com.icia.mboard.common.PagingConst;
 import com.icia.mboard.dto.BoardDetailDTO;
 import com.icia.mboard.dto.BoardPagingDTO;
 import com.icia.mboard.dto.BoardSaveDTO;
-import com.icia.mboard.dto.MemberSaveDTO;
+import com.icia.mboard.dto.BoardUpdateDTO;
 import com.icia.mboard.entity.BoardEntity;
 import com.icia.mboard.entity.MemberEntity;
 import com.icia.mboard.repository.BoardRepository;
@@ -67,5 +67,24 @@ public class BoardServiceImpl implements BoardService {
         );
 
         return boardList;
+    }
+
+    @Override
+    public Long update(BoardUpdateDTO boardUpdateDTO)  throws IllegalStateException, IOException {
+        MultipartFile b_file = boardUpdateDTO.getBoardFile();
+        String b_filename = b_file.getOriginalFilename();
+        b_filename = System.currentTimeMillis() + "-" + b_filename;
+        // 파일 저장하기
+        String savePath = "D:\\development_Phl\\source\\springboot\\MemberBoardProject\\src\\main\\resources\\board_uploadfile\\"+b_filename;
+        if(!b_file.isEmpty()) {
+            b_file.transferTo(new File(savePath));
+        }
+        boardUpdateDTO.setBoardFileName(b_filename);
+
+        MemberEntity memberEntity = mr.findById(boardUpdateDTO.getMemberId()).get();
+        BoardEntity boardEntity = BoardEntity.toBoardUpdateEntity(boardUpdateDTO,memberEntity);
+
+        return br.save(boardEntity).getId();
+
     }
 }

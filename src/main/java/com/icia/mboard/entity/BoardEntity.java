@@ -2,6 +2,7 @@ package com.icia.mboard.entity;
 
 import com.icia.mboard.dto.BoardDetailDTO;
 import com.icia.mboard.dto.BoardSaveDTO;
+import com.icia.mboard.dto.BoardUpdateDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -60,13 +61,16 @@ public class BoardEntity extends BaseEntity{
 
 
 
-    public static BoardEntity toBoardDetailEntity(BoardDetailDTO boardDetailDTO, MemberEntity memberEntity){
+    public static BoardEntity toBoardUpdateEntity(BoardUpdateDTO boardUpdateDTO, MemberEntity memberEntity){
         BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setId(boardUpdateDTO.getBoardId());
+        boardEntity.setMemberEntity(memberEntity);
+
         boardEntity.setBoardWriter(memberEntity.getMemberEmail());
-        boardEntity.setBoardTitle(boardDetailDTO.getBoardTitle());
-        boardEntity.setBoardContents(boardDetailDTO.getBoardContents());
-        boardEntity.setBoardPassword(boardDetailDTO.getBoardPassword());
-        boardEntity.setBoardFileName(boardDetailDTO.getBoardFileName());
+        boardEntity.setBoardTitle(boardUpdateDTO.getBoardTitle());
+        boardEntity.setBoardContents(boardUpdateDTO.getBoardContents());
+        boardEntity.setBoardPassword(boardUpdateDTO.getBoardPassword());
+        boardEntity.setBoardFileName(boardUpdateDTO.getBoardFileName());
 
         return boardEntity;
     }

@@ -26,14 +26,15 @@ public class CommentServiceImpl implements CommentService{
     public Long save(CommentSaveDTO commentSaveDTO) {
         BoardEntity boardEntity = br.findById(commentSaveDTO.getBoardId()).get();
         MemberEntity memberEntity = mr.findById(commentSaveDTO.getMemberId()).get();
-        CommentEntity comment = cr.save(CommentEntity.toCommentEntity(commentSaveDTO, boardEntity, memberEntity));
-        return comment.getId();
+        CommentEntity commentEntity = CommentEntity.toCommentEntity(commentSaveDTO, boardEntity, memberEntity);
+        return cr.save(commentEntity).getId();
     }
 
     @Override
     public List<CommentDetailDTO> findAll(Long boardId) {
         BoardEntity boardEntity = br.findById(boardId).get();
-        List<CommentEntity> commentEntityList = boardEntity.getCommentEntityList(); List<CommentDetailDTO> commentList = new ArrayList<>();
+        List<CommentEntity> commentEntityList = boardEntity.getCommentEntityList();
+        List<CommentDetailDTO> commentList = new ArrayList<>();
         for(CommentEntity c: commentEntityList){
             CommentDetailDTO commentDetailDTO = CommentDetailDTO.toCommentDetail(c);
             commentList.add(commentDetailDTO);

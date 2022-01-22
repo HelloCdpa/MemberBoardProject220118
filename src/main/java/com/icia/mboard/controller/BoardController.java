@@ -1,15 +1,14 @@
 package com.icia.mboard.controller;
 
 import com.icia.mboard.common.PagingConst;
-import com.icia.mboard.dto.BoardDetailDTO;
-import com.icia.mboard.dto.BoardPagingDTO;
-import com.icia.mboard.dto.BoardSaveDTO;
-import com.icia.mboard.dto.MemberSaveDTO;
+import com.icia.mboard.dto.*;
 import com.icia.mboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,8 +59,19 @@ public class BoardController {
 
     }
 
+    @GetMapping("/update/{boardId}")
+    public String updateForm(Model model, @PathVariable ("boardId") Long boardId){
+        BoardDetailDTO board = bs.findById(boardId);
+        model.addAttribute("board",board);
+        return "/board/update";
+    }
 
+    @PutMapping("{boardId}")
+    public ResponseEntity update(@ModelAttribute BoardUpdateDTO boardUpdateDTO)  throws IllegalStateException, IOException {
+        bs.update(boardUpdateDTO);
 
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
 
 

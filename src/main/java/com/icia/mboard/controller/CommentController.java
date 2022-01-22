@@ -20,7 +20,7 @@ public class CommentController {
     public @ResponseBody
     List<CommentDetailDTO> save (@ModelAttribute CommentSaveDTO commentSaveDTO, Model model){
         //저장
-        Long commentId = cs.save(commentSaveDTO);
+        cs.save(commentSaveDTO);
         //리스트로 전체 댓글 가져오기
         List<CommentDetailDTO> commentList = cs.findAll(commentSaveDTO.getBoardId());
         model.addAttribute("commentList",commentList);
