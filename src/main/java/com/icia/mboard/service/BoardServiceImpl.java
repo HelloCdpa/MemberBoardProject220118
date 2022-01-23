@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,14 +34,14 @@ public class BoardServiceImpl implements BoardService {
         String b_filename = b_file.getOriginalFilename();
         b_filename = System.currentTimeMillis() + "-" + b_filename;
         // 파일 저장하기
-        String savePath = "D:\\development_Phl\\source\\springboot\\MemberBoardProject\\src\\main\\resources\\board_uploadfile\\"+b_filename;
-        if(!b_file.isEmpty()) {
+        String savePath = "D:\\development_Phl\\source\\springboot\\MemberBoardProject\\src\\main\\resources\\board_uploadfile\\" + b_filename;
+        if (!b_file.isEmpty()) {
             b_file.transferTo(new File(savePath));
         }
         boardSaveDTO.setBoardFileName(b_filename);
 
         MemberEntity memberEntity = mr.findById(boardSaveDTO.getMemberId()).get();
-        BoardEntity boardEntity = BoardEntity.toBoardEntitySave(boardSaveDTO,memberEntity);
+        BoardEntity boardEntity = BoardEntity.toBoardEntitySave(boardSaveDTO, memberEntity);
 
         return br.save(boardEntity).getId();
     }
@@ -56,7 +56,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Page<BoardPagingDTO> paging(Pageable pageable) {
         int page = pageable.getPageNumber();
-        page = (page==1)? 0 : (page-1);
+        page = (page == 1) ? 0 : (page - 1);
 
         Page<BoardEntity> boardEntities = br.findAll(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")));
 
@@ -70,21 +70,50 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Long update(BoardUpdateDTO boardUpdateDTO)  throws IllegalStateException, IOException {
+    public Long update(BoardUpdateDTO boardUpdateDTO) throws IllegalStateException, IOException {
         MultipartFile b_file = boardUpdateDTO.getBoardFile();
         String b_filename = b_file.getOriginalFilename();
         b_filename = System.currentTimeMillis() + "-" + b_filename;
         // 파일 저장하기
-        String savePath = "D:\\development_Phl\\source\\springboot\\MemberBoardProject\\src\\main\\resources\\board_uploadfile\\"+b_filename;
-        if(!b_file.isEmpty()) {
+        String savePath = "D:\\development_Phl\\source\\springboot\\MemberBoardProject\\src\\main\\resources\\board_uploadfile\\" + b_filename;
+        if (!b_file.isEmpty()) {
             b_file.transferTo(new File(savePath));
         }
         boardUpdateDTO.setBoardFileName(b_filename);
 
         MemberEntity memberEntity = mr.findById(boardUpdateDTO.getMemberId()).get();
-        BoardEntity boardEntity = BoardEntity.toBoardUpdateEntity(boardUpdateDTO,memberEntity);
+        BoardEntity boardEntity = BoardEntity.toBoardUpdateEntity(boardUpdateDTO, memberEntity);
 
         return br.save(boardEntity).getId();
 
+    }
+
+    @Override
+    public void deleteById(Long boardId) {
+        br.deleteById(boardId);
+    }
+
+    @Override
+    public Page<BoardPagingDTO> search(String type, String keyword, Pageable pageable) {
+        int page = pageable.getPageNumber();
+        page = (page == 1) ? 0 : (page - 1);
+
+        Page<BoardEntity> searchEntity = null;
+        br.findAll(PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")));
+
+
+        if (type.equals("boardTitle")){
+            searchEntity = br.findByBoardTitleContainingIgnoreCase(keyword,PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")));
+        } else {
+            searchEntity = br.findByBoardWriterContainingIgnoreCase(keyword,PageRequest.of(page, PagingConst.PAGE_LIMIT, Sort.by(Sort.Direction.DESC, "id")));
+        }
+
+        Page<BoardPagingDTO> boardList = searchEntity.map(
+                board -> new BoardPagingDTO(board.getId(),
+                        board.getBoardWriter(),
+                        board.getBoardTitle())
+        );
+
+        return boardList;
     }
 }

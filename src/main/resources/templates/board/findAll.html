@@ -9,6 +9,23 @@
 <a class="btn btn-outline-info" href="/board/save" >게시글 작성</a>
 </span>
 
+<form class="row g-3 container text-center" style="margin-top: 100px;" action="/board/search" method="get">
+    <div class="col-auto" >
+        <select class="form-select" style="width:100px;height:40px; display:inline;" name="type">
+            <option value="boardTitle">제목</option>
+            <option value="boardWriter">작성자</option>
+        </select>
+    </div>
+
+    <div class="col-auto">
+        <input class="form-control"  type="text" name="keyword">
+    </div>
+
+    <div class="col-auto">
+        <input class="form-control"  type="submit" value="검색">
+    </div>
+</form>
+
 
 <table class="table table-hover">
     <thead>
@@ -27,6 +44,7 @@
         or (${session.loginEmail}==${board.boardWriter})"
                    th:onclick="deleteById([[${board.boardId}]])"
                    value="삭제"></td>
+
         <td><a class="btn btn-info" type="button" th:if="(${session.loginEmail}==${board.boardWriter})"
                th:href="@{|/board/update/${board.boardId}|}">글수정</a></td>
 
@@ -71,4 +89,27 @@
 </div>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script>
+   const deleteById  = (boardId) => {
+        const reqUrl = "/board/"+ boardId;
+       $.ajax({
+           url : reqUrl,
+           type : 'delete',
+           success : function (){
+               alert('삭제완료');
+               location.reload();
+           }, error : function (){
+               alert('실패')
+           }
+       })
+    }
+
+
+</script>
+
+
+
+
+
 </html>

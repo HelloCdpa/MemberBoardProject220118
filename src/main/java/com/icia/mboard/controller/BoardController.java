@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/board")
@@ -73,10 +74,27 @@ public class BoardController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @DeleteMapping("{boardId}")
+    public ResponseEntity deleteById (@PathVariable ("boardId") Long boardId){
+        bs.deleteById(boardId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
+    @GetMapping("/search")
+    public String search(@RequestParam("type") String type,
+                         @RequestParam("keyword") String keyword, Model model,
+                         @PageableDefault(page = 1)Pageable pageable) {
+        Page<BoardPagingDTO> boardList = bs.search(type, keyword, pageable);
 
+        model.addAttribute("boardList", boardList);
 
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / PagingConst.BLOCK_LIMIT))) - 1) * PagingConst.BLOCK_LIMIT + 1;
+        int endPage = ((startPage + PagingConst.BLOCK_LIMIT-1)< boardList.getTotalPages())?startPage + PagingConst.BLOCK_LIMIT -1 : boardList.getTotalPages();
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
 
+        return "/board/findAll";
+    }
 
 
 

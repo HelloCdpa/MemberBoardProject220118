@@ -59,8 +59,6 @@ public class BoardEntity extends BaseEntity{
 
     }
 
-
-
     public static BoardEntity toBoardUpdateEntity(BoardUpdateDTO boardUpdateDTO, MemberEntity memberEntity){
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setId(boardUpdateDTO.getBoardId());
@@ -74,6 +72,8 @@ public class BoardEntity extends BaseEntity{
 
         return boardEntity;
     }
+
+
 
 
 }
