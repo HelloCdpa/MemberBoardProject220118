@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface BoardService {
     Long save(BoardSaveDTO boardSaveDTO)throws IllegalStateException, IOException;
@@ -21,6 +20,9 @@ public interface BoardService {
 
     void deleteById(Long boardId);
 
-
     Page<BoardPagingDTO> search(String type, String keyword,Pageable pageable);
+
+    public Long saveTest(BoardSaveDTO boardSaveDTO);
+
+
 }

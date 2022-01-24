@@ -45,6 +45,14 @@ public class BoardServiceImpl implements BoardService {
 
         return br.save(boardEntity).getId();
     }
+    @Override
+    public Long saveTest(BoardSaveDTO boardSaveDTO){
+        MemberEntity memberEntity = mr.findById(boardSaveDTO.getMemberId()).get();
+        BoardEntity boardEntity = BoardEntity.toBoardEntitySave(boardSaveDTO, memberEntity);
+
+        return br.save(boardEntity).getId();
+    }
+
 
     @Override
     public BoardDetailDTO findById(Long boardId) {
@@ -116,4 +124,7 @@ public class BoardServiceImpl implements BoardService {
 
         return boardList;
     }
+
+
+
 }

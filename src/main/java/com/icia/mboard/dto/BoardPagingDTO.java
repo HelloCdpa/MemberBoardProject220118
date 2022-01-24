@@ -12,4 +12,5 @@ public class BoardPagingDTO {
     private String BoardWriter;
     private String BoardTitle;
 
+
 }

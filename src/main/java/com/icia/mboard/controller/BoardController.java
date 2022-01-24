@@ -92,6 +92,8 @@ public class BoardController {
         int endPage = ((startPage + PagingConst.BLOCK_LIMIT-1)< boardList.getTotalPages())?startPage + PagingConst.BLOCK_LIMIT -1 : boardList.getTotalPages();
         model.addAttribute("startPage",startPage);
         model.addAttribute("endPage",endPage);
+        model.addAttribute("type",type);
+        model.addAttribute("keyword",keyword);
 
         return "/board/findAll";
     }

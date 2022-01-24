@@ -3,9 +3,11 @@ package com.icia.mboard.entity;
 import com.icia.mboard.dto.BoardDetailDTO;
 import com.icia.mboard.dto.BoardSaveDTO;
 import com.icia.mboard.dto.BoardUpdateDTO;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -44,6 +46,8 @@ public class BoardEntity extends BaseEntity{
     @Column
     private String boardFileName;
 
+    @Column(columnDefinition = "integer default 0")
+    private int boardHits;
 
     public static BoardEntity toBoardEntitySave(BoardSaveDTO boardSaveDTO, MemberEntity memberEntity){
         BoardEntity boardEntity = new BoardEntity();

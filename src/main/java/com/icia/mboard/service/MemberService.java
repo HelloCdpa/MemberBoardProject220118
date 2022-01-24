@@ -25,5 +25,7 @@ public interface MemberService {
 
 
     void update(MemberUpdateDTO memberUpdateDTO) throws IllegalStateException, IOException;
+
+    public Long saveTest(MemberSaveDTO memberSaveDTO);
 }
 
