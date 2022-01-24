@@ -3,6 +3,7 @@ package com.icia.mboard.controller;
 import com.icia.mboard.common.PagingConst;
 import com.icia.mboard.dto.*;
 import com.icia.mboard.service.BoardService;
+import com.icia.mboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
     private final BoardService bs;
+    private final CommentService cs;
 
     @GetMapping("/save")
     public String saveForm(Model model){
@@ -44,7 +46,10 @@ public class BoardController {
     @GetMapping("{boardId}")
     public String findById(@PathVariable ("boardId") Long boardId, Model model){
         BoardDetailDTO boardDetailDTO = bs.findById(boardId);
+
+        List<CommentDetailDTO> commentList = cs.findAll(boardId);
         model.addAttribute("board",boardDetailDTO);
+        model.addAttribute("commentList",commentList);
         return "/board/findById";
     }
 

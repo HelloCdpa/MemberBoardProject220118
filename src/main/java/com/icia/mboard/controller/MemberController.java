@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+import static com.icia.mboard.common.SessionConst.LOGIN_EMAIL;
+
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -70,20 +72,34 @@ public class MemberController {
     @PostMapping("/login")
     public String login(@Validated @ModelAttribute("member") MemberLoginDTO memberLoginDTO,
                         BindingResult bindingResult, HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            return "/member/login";
-        }
-
-        if (ms.findByEmail(memberLoginDTO)) {
-            session.setAttribute("loginEmail", memberLoginDTO.getMemberEmail());
+        if(ms.findByEmail(memberLoginDTO)){
+            session.setAttribute(LOGIN_EMAIL, memberLoginDTO.getMemberEmail());
             Long loginId = ms.findByMemberId(memberLoginDTO.getMemberEmail());
             session.setAttribute("loginId", loginId);
-            System.out.println(loginId);
-            return "redirect:/board/";
-        } else {
-            return "/member/login";
-        }
+            String redirectURL = (String) session.getAttribute("redirectURL");
 
+            if (redirectURL != null){
+                return "redirect:" + redirectURL;
+            }else{
+                return "redirect:/";
+            }
+
+        } else {
+
+            if (bindingResult.hasErrors()) {
+                return "/member/login";
+            }
+
+                if (ms.findByEmail(memberLoginDTO)) {
+                    session.setAttribute(LOGIN_EMAIL, memberLoginDTO.getMemberEmail());
+                    Long loginId = ms.findByMemberId(memberLoginDTO.getMemberEmail());
+                    session.setAttribute("loginId", loginId);
+                    System.out.println(loginId);
+                    return "redirect:/board/";
+                } else {
+                    return "/member/login";
+                }
+        }
     }
 
     //로그아웃

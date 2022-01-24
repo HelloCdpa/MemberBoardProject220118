@@ -43,4 +43,11 @@ public class CommentServiceImpl implements CommentService{
         return commentList;
 
     }
+
+    @Override
+    public void deleteById(Long commentId) {
+        br.deleteById(commentId);
+    }
+
+
 }

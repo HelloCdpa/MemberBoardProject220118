@@ -27,7 +27,8 @@ public class CommentDetailDTO {
         commentDetailDTO.setCommentUpdateDate(commentEntity.getUpdateTime());
 
         commentDetailDTO.setCommentId(commentEntity.getId());
-        commentDetailDTO.setBoardId(commentEntity.getMemberEntity().getId());
+        commentDetailDTO.setBoardId(commentEntity.getBoardEntity().getId());
+        commentDetailDTO.setMemberId(commentEntity.getMemberEntity().getId());
 
         return commentDetailDTO;
     }
