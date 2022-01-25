@@ -54,8 +54,7 @@ public class MemberController {
     }
 
     @PostMapping("/emailDuplication")
-    public @ResponseBody
-    String emailDuplication(@RequestParam("memberEmail") String memberEmail) {
+    public @ResponseBody String emailDuplication(@RequestParam("memberEmail") String memberEmail) {
         String result = ms.emailDuplication(memberEmail);
         return result;
     }
@@ -81,7 +80,7 @@ public class MemberController {
             if (redirectURL != null){
                 return "redirect:" + redirectURL;
             }else{
-                return "redirect:/";
+                return "redirect:/board/";
             }
 
         } else {
