@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -55,9 +56,11 @@ public class BoardServiceImpl implements BoardService {
 
 
     @Override
+    @Transactional
     public BoardDetailDTO findById(Long boardId) {
         Optional<BoardEntity> optionalBoard = br.findById(boardId);
         BoardDetailDTO boardDetailDTO = BoardDetailDTO.toBoardDetailDTO(optionalBoard.get());
+        br.boardHits(boardId);
         return boardDetailDTO;
     }
 
@@ -71,7 +74,8 @@ public class BoardServiceImpl implements BoardService {
         Page<BoardPagingDTO> boardList = boardEntities.map(
                 board -> new BoardPagingDTO(board.getId(),
                         board.getBoardWriter(),
-                        board.getBoardTitle())
+                        board.getBoardTitle(),
+                        board.getBoardHits())
         );
 
         return boardList;
@@ -119,7 +123,8 @@ public class BoardServiceImpl implements BoardService {
         Page<BoardPagingDTO> boardList = searchEntity.map(
                 board -> new BoardPagingDTO(board.getId(),
                         board.getBoardWriter(),
-                        board.getBoardTitle())
+                        board.getBoardTitle(),
+                        board.getBoardHits())
         );
 
         return boardList;

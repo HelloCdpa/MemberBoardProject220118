@@ -21,6 +21,7 @@ public class MemberDetailDTO {
     private LocalDateTime memberCreateTime;
     private LocalDateTime memberUpdateTime;
 
+
     public static MemberDetailDTO toMemberDetailDTO(MemberEntity memberEntity){
         MemberDetailDTO memberDetailDTO = new MemberDetailDTO();
         memberDetailDTO.setMemberId(memberEntity.getId());

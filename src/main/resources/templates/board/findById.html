@@ -6,7 +6,7 @@
     <title>상세조회</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <style>
-        .container{
+        .container-sm{
             margin: 20px;
             border: gray solid 1px;
             background-color: bisque;
@@ -19,28 +19,33 @@
 <body>
 <input type="hidden" id="boardId" th:value="${board.boardId}">
 <input type="hidden" id="memberId" th:value="${board.memberId}">
-<div class="container form-control rounded">
+<div class="container-sm form-control rounded">
     <div class="row" id="boardHead">
         <div class="col-md-3">
-            <p th:text="${board.boardWriter}"></p>
+            작성자 : <span th:text="${board.boardWriter}"></span>
         </div>
         <div class="col-md-3">
-            <p th:text="${board.boardPassword}"></p>
+           조회수 : <span th:text="${board.boardHits}"></span>
         </div>
         <div class="col-md-3">
-            <p th:text="${board.boardTitle}"></p>
+           작성시간 : <span th:text="${board.createBoardDate}"></span>
         </div>
-        <div class="col-md-3">
-            <p th:text="${board.createBoardDate}"></p>
-        </div>
-
     </div>
     <div class="row">
-        <p th:text="${board.boardFileName}"></p>
+        <div class="col-md-12">
+         제목 : <span th:text="${board.boardTitle}"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p th:text="${board.boardFileName}"></p>
+        </div>
     </div>
 
     <div class="row">
+        <div class="col-md-12">
         <textarea class="form-control" rows="3" th:text="${board.boardContents}"></textarea>
+        </div>
     </div>
 </div>
 

@@ -21,6 +21,8 @@ public class BoardDetailDTO {
     private String boardFileName;
     private LocalDateTime CreateBoardDate;
     private LocalDateTime UpdateBoardDate;
+    private int boardHits;
+
 
     public static BoardDetailDTO toBoardDetailDTO(BoardEntity boardEntity){
         BoardDetailDTO boardDetailDTO = new BoardDetailDTO();
@@ -31,6 +33,8 @@ public class BoardDetailDTO {
         boardDetailDTO.setBoardTitle(boardEntity.getBoardTitle());
         boardDetailDTO.setBoardContents(boardEntity.getBoardContents());
         boardDetailDTO.setBoardFileName(boardEntity.getBoardFileName());
+        boardDetailDTO.setCreateBoardDate(boardEntity.getCreatTime());
+        boardDetailDTO.setBoardHits(boardEntity.getBoardHits());
 
         return boardDetailDTO;
 

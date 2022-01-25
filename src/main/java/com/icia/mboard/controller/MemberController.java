@@ -70,7 +70,11 @@ public class MemberController {
     //로그인 세션값 저장 - 유효성검증 -> 이메일 확인 -> 비밀번호 확인 -> 세션아이디 저장
     @PostMapping("/login")
     public String login(@Validated @ModelAttribute("member") MemberLoginDTO memberLoginDTO,
-                        BindingResult bindingResult, HttpSession session) {
+                        BindingResult bindingResult, HttpSession session, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "/member/login";
+        }
+
         if(ms.findByEmail(memberLoginDTO)){
             session.setAttribute(LOGIN_EMAIL, memberLoginDTO.getMemberEmail());
             Long loginId = ms.findByMemberId(memberLoginDTO.getMemberEmail());
@@ -84,20 +88,9 @@ public class MemberController {
             }
 
         } else {
+            model.addAttribute("msg","로그인 실패");
+            return "/member/login";
 
-            if (bindingResult.hasErrors()) {
-                return "/member/login";
-            }
-
-                if (ms.findByEmail(memberLoginDTO)) {
-                    session.setAttribute(LOGIN_EMAIL, memberLoginDTO.getMemberEmail());
-                    Long loginId = ms.findByMemberId(memberLoginDTO.getMemberEmail());
-                    session.setAttribute("loginId", loginId);
-                    System.out.println(loginId);
-                    return "redirect:/board/";
-                } else {
-                    return "/member/login";
-                }
         }
     }
 
