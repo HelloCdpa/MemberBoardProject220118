@@ -2,11 +2,11 @@
     1. Entity 설계 /테이블 이름
         1. 모든 테이블의 베이스 - createTime, updateTime  (생성한 시간 / 업데이트한 시간)
         2. 회원 - id memberEmail memberPassword memberName memberPhone memberProfileName
-        회원데이터: 회원번호, 이메일, 비밀번호, 이름, 전화번호, 프로필사진, 가입일자, 수정일자
+        - 회원데이터: 회원번호, 이메일, 비밀번호, 이름, 전화번호, 프로필사진, 가입일자, 수정일자
         3. 게시판 - id memberId boardWriter boardPassword boardTitle boardContents boardFileName
-        게시글데이터: 글번호, 제목, 작성자, 내용, 조회수, 첨부파일명, 작성시간, 수정시간
+        - 게시글데이터: 글번호, 제목, 작성자, 내용, 조회수, 첨부파일명, 작성시간, 수정시간
         4. 댓글 - id memberId boardId commentWriter commentContents
-        댓글데이터: 댓글번호, 게시글번호, 작성자, 작성시간, 수정시간
+        - 댓글데이터: 댓글번호, 게시글번호, 작성자, 작성시간, 수정시간
         
     2. 참조관계 
        1. 회원(memberId의 memberEmail) 이메일 - 게시글 작성자 & 댓글 작성자
@@ -60,8 +60,8 @@
         2. 테스트코드
             1. jUnit, postman 활용
         3. 타임리프를 활용
-             2. validation check, global error 등
+            - validation check, global error 등
         4. 인터셉터 적용
-            1. 인터셉터를 적용하여 로그인하지 않은 사용자가 글목록, 글조회 등으로 접근할 경우 로그인페이지로 가도록 함. 
+            - 인터셉터를 적용하여 로그인하지 않은 사용자가 글목록, 글조회 등으로 접근할 경우 로그인페이지로 가도록 함. 
             
    
